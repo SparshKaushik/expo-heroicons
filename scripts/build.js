@@ -14,7 +14,6 @@ let transform = {
     let component = await svgr(
       svg,
       {
-        ref: true,
         native: true,
       },
       {
