@@ -1,8 +1,8 @@
 {
-  "name": "@heroicons/react-native",
+  "name": "heroicons-native",
   "license": "MIT",
   "version": "2.2.0",
-  "description": "A set of free MIT-licensed high-quality SVG icons for React Native development.",
+  "description": "A set of free MIT-licensed high-quality SVG icons for React Native and Expo development.",
   "keywords": [
     "icons",
     "svg",

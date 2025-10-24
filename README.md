@@ -45,10 +45,10 @@ Both icon styles are preconfigured to be stylable by setting the `color` CSS pro
 
 ## React Native & Expo
 
-First, install `@heroicons/react-native` from npm:
+First, install `heroicons-native` from npm:
 
 ```sh
-npm install @heroicons/react-native
+npm install heroicons-native
 ```
 
 You'll also need to install `react-native-svg` as a peer dependency:
@@ -60,7 +60,7 @@ npm install react-native-svg
 Now each icon can be imported individually as a React Native component:
 
 ```jsx
-import { BeakerIcon } from '@heroicons/react-native/24/solid'
+import { BeakerIcon } from 'heroicons-native/24/solid'
 
 function MyComponent() {
   return (
@@ -72,7 +72,7 @@ function MyComponent() {
 }
 ```
 
-The 24x24 outline icons can be imported from `@heroicons/react-native/24/outline`, the 24x24 solid icons can be imported from `@heroicons/react-native/24/solid`, the 20x20 solid icons can be imported from `@heroicons/react-native/20/solid`, and the 16x16 solid icons can be imported from `@heroicons/react-native/16/solid`.
+The 24x24 outline icons can be imported from `heroicons-native/24/outline`, the 24x24 solid icons can be imported from `heroicons-native/24/solid`, the 20x20 solid icons can be imported from `heroicons-native/20/solid`, and the 16x16 solid icons can be imported from `heroicons-native/16/solid`.
 
 Icons use an upper camel case naming convention and are always suffixed with the word `Icon`.
 
