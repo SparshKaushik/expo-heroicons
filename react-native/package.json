@@ -1,7 +1,7 @@
 {
   "name": "heroicons-native",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A set of free MIT-licensed high-quality SVG icons for React Native and Expo development.",
   "keywords": [
     "icons",
@@ -10,10 +10,10 @@
     "react-native-svg",
     "expo"
   ],
-  "homepage": "https://github.com/tailwindlabs/heroicons#readme",
+  "homepage": "https://github.com/SparshKaushik/heroicons-native#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tailwindlabs/heroicons.git"
+    "url": "https://github.com/SparshKaushik/heroicons-native.git"
   },
   "files": [
     "16",
