@@ -4,15 +4,26 @@ const { promisify } = require('util')
 const rimraf = promisify(require('rimraf'))
 const svgr = require('@svgr/core').default
 const babel = require('@babel/core')
-const { compile: compileVue } = require('@vue/compiler-dom')
+const transformReactNativeSvg = require('@svgr/babel-plugin-transform-react-native-svg')
 const { dirname } = require('path')
 const { deprecated } = require('./deprecated')
 
 let transform = {
-  react: async (svg, componentName, format, isDeprecated) => {
-    let component = await svgr(svg, { ref: true, titleProp: true }, { componentName })
+  'react-native': async (svg, componentName, format, isDeprecated) => {
+    // Transform SVG to React Native SVG using @svgr/core
+    let component = await svgr(
+      svg,
+      {
+        ref: true,
+        native: true,
+      },
+      {
+        componentName,
+      }
+    )
+
     let { code } = await babel.transformAsync(component, {
-      plugins: [[require('@babel/plugin-transform-react-jsx'), { useBuiltIns: true }]],
+      plugins: [[transformReactNativeSvg], [require('@babel/plugin-transform-react-jsx'), { useBuiltIns: true }]],
     })
 
     // Add a deprecation warning to the component
@@ -31,38 +42,9 @@ let transform = {
 
     return code
       .replace('import * as React from "react"', 'const React = require("react")')
+      .replace("import { Svg", "const { Svg")
+      .replace("} from 'react-native-svg'", "} = require('react-native-svg')")
       .replace('export default', 'module.exports =')
-  },
-  vue: (svg, componentName, format, isDeprecated) => {
-    let { code } = compileVue(svg, {
-      mode: 'module',
-    })
-
-    // Add a deprecation warning to the component
-    if (isDeprecated) {
-      /** @type {string[]} */
-      let lines = code.split('\n')
-      lines.splice(2, 0, `/** @deprecated */`)
-      code = lines.join('\n')
-    }
-
-    if (format === 'esm') {
-      return code.replace('export function', 'export default function')
-    }
-
-    return code
-      .replace(
-        /import\s+\{\s*([^}]+)\s*\}\s+from\s+(['"])(.*?)\2/,
-        (_match, imports, _quote, mod) => {
-          let newImports = imports
-            .split(',')
-            .map((i) => i.trim().replace(/\s+as\s+/, ': '))
-            .join(', ')
-
-          return `const { ${newImports} } = require("${mod}")`
-        }
-      )
-      .replace('export function render', 'module.exports = function render')
   },
 }
 
@@ -115,25 +97,17 @@ async function buildIcons(package, style, format) {
       /** @type {string[]} */
       let types = []
 
-      if (package === 'react') {
-        types.push(`import * as React from 'react';`)
-        if (isDeprecated) {
-          types.push(`/** @deprecated */`)
-        }
-        types.push(`declare const ${componentName}: React.ForwardRefExoticComponent<React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> & { title?: string, titleId?: string } & React.RefAttributes<SVGSVGElement>>;`)
-        types.push(`export default ${componentName};`)
-      } else {
-        types.push(`import type { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue';`)
-        if (isDeprecated) {
-          types.push(`/** @deprecated */`)
-        }
-        types.push(`declare const ${componentName}: FunctionalComponent<HTMLAttributes & VNodeProps>;`)
-        types.push(`export default ${componentName};`)
+      types.push(`import * as React from 'react';`)
+      types.push(`import type { SvgProps } from 'react-native-svg';`)
+      if (isDeprecated) {
+        types.push(`/** @deprecated */`)
       }
+      types.push(`declare const ${componentName}: React.ForwardRefExoticComponent<SvgProps & React.RefAttributes<any>>;`)
+      types.push(`export default ${componentName};`)
 
       return [
         ensureWrite(`${outDir}/${componentName}.js`, content),
-        ...(types ? [ensureWrite(`${outDir}/${componentName}.d.ts`, types.join("\n") + "\n")] : []),
+        ensureWrite(`${outDir}/${componentName}.d.ts`, types.join("\n") + "\n"),
       ]
     })
   )

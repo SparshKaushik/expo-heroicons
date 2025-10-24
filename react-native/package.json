@@ -1,13 +1,14 @@
 {
-  "name": "@heroicons/vue",
+  "name": "@heroicons/react-native",
   "license": "MIT",
   "version": "2.2.0",
-  "description": "A set of free MIT-licensed high-quality SVG icons for UI development.",
+  "description": "A set of free MIT-licensed high-quality SVG icons for React Native development.",
   "keywords": [
     "icons",
     "svg",
-    "vue",
-    "tailwindcss"
+    "react-native",
+    "react-native-svg",
+    "expo"
   ],
   "homepage": "https://github.com/tailwindlabs/heroicons#readme",
   "repository": {
@@ -18,10 +19,6 @@
     "16",
     "20",
     "24",
-    "outline",
-    "solid",
-    "index.esm.js",
-    "index.js",
     "LICENSE",
     "README.md"
   ],
@@ -149,6 +146,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "vue": ">= 3"
+    "react": ">= 16 || ^19.0.0-rc",
+    "react-native-svg": ">= 12.0.0"
   }
 }

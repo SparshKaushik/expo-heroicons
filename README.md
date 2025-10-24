@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  Beautiful hand-crafted SVG icons, by the makers of Tailwind CSS. <br>Available as basic SVG icons and via first-party <a href="#react">React</a> and <a href="#vue">Vue</a> libraries.
+  Beautiful hand-crafted SVG icons for React Native and Expo. <br>This is a React Native port of <a href="https://heroicons.com">Heroicons</a>. <br>For web-based React and Vue libraries, please visit <a href="https://github.com/tailwindlabs/heroicons">https://github.com/tailwindlabs/heroicons</a>
 <p>
 
 <p align="center">
@@ -42,6 +42,47 @@ The quickest way to use these icons is to simply copy the source for the icon yo
 ```
 
 Both icon styles are preconfigured to be stylable by setting the `color` CSS property, either manually or using utility classes like `text-gray-500` in a framework like [Tailwind CSS](https://tailwindcss.com).
+
+## React Native & Expo
+
+First, install `@heroicons/react-native` from npm:
+
+```sh
+npm install @heroicons/react-native
+```
+
+You'll also need to install `react-native-svg` as a peer dependency:
+
+```sh
+npm install react-native-svg
+```
+
+Now each icon can be imported individually as a React Native component:
+
+```jsx
+import { BeakerIcon } from '@heroicons/react-native/24/solid'
+
+function MyComponent() {
+  return (
+    <View>
+      <BeakerIcon width={24} height={24} color="blue" />
+      <Text>...</Text>
+    </View>
+  )
+}
+```
+
+The 24x24 outline icons can be imported from `@heroicons/react-native/24/outline`, the 24x24 solid icons can be imported from `@heroicons/react-native/24/solid`, the 20x20 solid icons can be imported from `@heroicons/react-native/20/solid`, and the 16x16 solid icons can be imported from `@heroicons/react-native/16/solid`.
+
+Icons use an upper camel case naming convention and are always suffixed with the word `Icon`.
+
+## Web Libraries (React & Vue)
+
+This package is specifically for React Native and Expo development. If you're looking for web-based React or Vue libraries, please visit the official Heroicons repository:
+
+- **React**: [@heroicons/react](https://www.npmjs.com/package/@heroicons/react)
+- **Vue**: [@heroicons/vue](https://www.npmjs.com/package/@heroicons/vue)
+- **Official Repository**: [https://github.com/tailwindlabs/heroicons](https://github.com/tailwindlabs/heroicons)
 
 ## React
 
